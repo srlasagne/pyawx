@@ -18,7 +18,7 @@ Warnings:
 from pydantic import BaseModel
 
 from .http import HTTP
-from .models import JobTemplateModel
+from .models import JobTemplateModel, WorkflowJobTemplateModel
 
 
 class Resource:
@@ -195,3 +195,19 @@ class JobTemplateResource(Resource):
 
     def __init__(self, http_client: HTTP) -> None:
         super().__init__(http_client, "job_templates", JobTemplateModel)
+
+
+class WorkflowJobTemplateResource(Resource):
+    """Represents a resource for interacting with workflow job templates in the API.
+
+    Attributes:
+        `_http` (`HTTP`): The HTTP client used to send requests to the API.
+        `resource` (`str`): The resource name.
+        `model` (`type[WorkflowJobTemplateModel]`): The Pydantic model class for
+            the workflow job template data.
+    """
+
+    def __init__(self, http_client: HTTP) -> None:
+        super().__init__(
+            http_client, "workflow_job_templates", WorkflowJobTemplateModel
+        )

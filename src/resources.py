@@ -18,6 +18,7 @@ Warnings:
 from pydantic import BaseModel
 
 from .http import HTTP
+from .models import JobTemplateModel
 
 
 class Resource:
@@ -180,3 +181,17 @@ class Resource:
         """
         resource_id: str = self._get_id_by_name(resource_name)
         self._http.delete(self.resource, resource_id)
+
+
+class JobTemplateResource(Resource):
+    """Represents a resource for interacting with job templates in the API.
+
+    Attributes:
+        `_http` (`HTTP`): The HTTP client used to send requests to the API.
+        `resource` (`str`): The resource name.
+        `model` (`type[JobTemplateModel]`): The Pydantic model class for the job
+            template data.
+    """
+
+    def __init__(self, http_client: HTTP) -> None:
+        super().__init__(http_client, "job_templates", JobTemplateModel)

@@ -196,6 +196,8 @@ class JobTemplateResource(Resource):
     def __init__(self, http_client: HTTP) -> None:
         super().__init__(http_client, "job_templates", JobTemplateModel)
 
+    # TODO: Add `launch` method to launch a job template.
+
 
 class WorkflowJobTemplateResource(Resource):
     """Represents a resource for interacting with workflow job templates in the API.
@@ -211,3 +213,5 @@ class WorkflowJobTemplateResource(Resource):
         super().__init__(
             http_client, "workflow_job_templates", WorkflowJobTemplateModel
         )
+
+    # TODO: Add `launch` method to launch a workflow job template.

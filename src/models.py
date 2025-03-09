@@ -1,5 +1,10 @@
 """Defines pydantic data models for resources that conforms to the AWX API.
 
+Models:
+
+- `JobTemplateModel`
+- `WorkflowJobTemplateModel`
+
 These models ensure strong typing, data validation, and documentation for
 attributes related to job execution.
 

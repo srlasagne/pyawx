@@ -1,3 +1,3 @@
 # PyAWX
 
-AWX python client.
+Python client for managing AWX automation platform.

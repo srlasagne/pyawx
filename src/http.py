@@ -114,12 +114,18 @@ class HTTP:
         Returns:
             `dict`: The retrieved resource.
 
+        Raises:
+            `ValueError`: If the resource retrieval fails.
+
         Examples:
             >>> response = client.get("resource", "id")
             >>> response = client.get("resource")
         """
-        url: str = self._build_url(resource, resource_id)
-        return self._request("GET", url)
+        try:
+            url: str = self._build_url(resource, resource_id)
+            return self._request("GET", url)
+        except requests.HTTPError as e:
+            raise ValueError(f"Failed to retrieve resource: {e}")
 
     def post(self, resource: str, data: dict) -> dict:
         """Creates a new resource.
@@ -131,11 +137,17 @@ class HTTP:
         Returns:
             `dict`: The created resource.
 
+        Raises:
+            `ValueError`: If the resource creation fails.
+
         Examples:
             >>> response = client.post("resource", {"foo": "bar"})
         """
-        url: str = self._build_url(resource)
-        return self._request("POST", url, data)
+        try:
+            url: str = self._build_url(resource)
+            return self._request("POST", url, data)
+        except requests.HTTPError as e:
+            raise ValueError(f"Failed to create resource: {e}")
 
     def patch(self, resource: str, resource_id: str, data: dict) -> dict:
         """Updates an existing resource by its identifier.
@@ -148,11 +160,17 @@ class HTTP:
         Returns:
             `dict`: The updated resource.
 
+        Raises:
+            `ValueError`: If the resource update fails.
+
         Examples:
             >>> response = client.patch("resource", "id", {"foo": "updated_bar"})
         """
-        url: str = self._build_url(resource, resource_id)
-        return self._request("PATCH", url, data)
+        try:
+            url: str = self._build_url(resource, resource_id)
+            return self._request("PATCH", url, data)
+        except requests.HTTPError as e:
+            raise ValueError(f"Failed to update resource: {e}")
 
     def delete(self, resource: str, resource_id: str) -> None:
         """Deletes a specific resource by its identifier.
@@ -161,8 +179,14 @@ class HTTP:
             `resource` (`str`): The resource type.
             `resource_id` (`str`): The resource identifier.
 
+        Raises:
+            `ValueError`: If the resource deletion fails.
+
         Examples:
             >>> client.delete("resource", "id")
         """
-        url: str = self._build_url(resource, resource_id)
-        self._request("DELETE", url)
+        try:
+            url: str = self._build_url(resource, resource_id)
+            self._request("DELETE", url)
+        except requests.HTTPError as e:
+            raise ValueError(f"Failed to delete resource: {e}")

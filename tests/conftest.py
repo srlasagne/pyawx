@@ -1,7 +1,8 @@
 import pytest
 import requests
 
-from pyawx.auth import BasicAuth, OAuth2
+from pyawx.auth import Auth, BasicAuth, OAuth2
+from pyawx.http import HTTP
 
 
 @pytest.fixture
@@ -17,3 +18,14 @@ def basic_auth() -> BasicAuth:
 @pytest.fixture
 def oauth2() -> OAuth2:
     return OAuth2("token")
+
+
+class MockAuth(Auth):
+    def apply(self, session) -> None:
+        pass
+
+
+@pytest.fixture
+def http() -> HTTP:
+    auth = MockAuth()
+    return HTTP("https://api.example.com", "v1", auth, verify_tls=True)

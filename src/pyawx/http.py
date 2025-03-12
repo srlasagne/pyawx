@@ -104,6 +104,18 @@ class HTTP:
         response.raise_for_status()
         return response.json() if response.content else {}
 
+    def is_authenticated(self) -> bool:
+        """Checks if the HTTP client is authenticated.
+
+        Returns:
+            `bool`: True if the client is authenticated, False otherwise.
+        """
+        try:
+            self.session.get(self.url)
+            return True
+        except requests.HTTPError:
+            return False
+
     def get(self, resource: str, resource_id: str | None = None) -> dict:
         """Retrieves a resource, optionally by its identifier.
 

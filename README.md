@@ -45,7 +45,11 @@ _work in progress_
 
 ## 🧪 Testing
 
-_work in progress_
+Run unit tests using `pytest`:
+
+```sh
+uv run pytest tests
+```
 
 ## 🛠️ Roadmap
 

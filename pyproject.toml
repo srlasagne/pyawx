@@ -5,16 +5,12 @@ description = "Python client for managing AWX automation platform"
 readme = "README.md"
 authors = [{ name = "srlasagne" }]
 requires-python = ">=3.13"
+classifiers = ["development_status :: 3 - Alpha", "license :: GPL-3.0"]
 dependencies = ["pydantic>=2.10.6", "requests>=2.32.3"]
 
 [dependency-groups]
-dev = [
-    "pytest>=8.3.5",
-    "responses>=0.25.7",
-]
-docs = [
-    "pdoc>=15.0.1",
-]
+dev = ["pytest>=8.3.5", "responses>=0.25.7"]
+docs = ["pdoc>=15.0.1"]
 
 [build-system]
 requires = ["hatchling"]

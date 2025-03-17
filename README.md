@@ -1,5 +1,8 @@
 # 🤖 PyAWX
 
+![PyPI - Version](https://img.shields.io/pypi/v/pyawx)
+![GitHub License](https://img.shields.io/github/license/srlasagne/pyawx)
+
 Python client for managing AWX automation platform.
 
 **📌 Table of Contents**

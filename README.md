@@ -192,4 +192,5 @@ uv run pytest tests
 
 ## 🛠️ Roadmap
 
-_work in progress_
+- Add asynchronous calls support.
+- Add support for more AWX resources.

@@ -33,7 +33,21 @@ Each module is documented in detail and can be explored using
 
 ## 📦 Installation
 
-_work in progress_
+### 📥 Pip
+
+Install the `pyawx` package using `pip`:
+
+```bash
+pip install pyawx
+```
+
+### 📥 UV
+
+Install the `pyawx` package using `uv`:
+
+```bash
+uv add pyawx
+```
 
 ## 📖 Usage
 

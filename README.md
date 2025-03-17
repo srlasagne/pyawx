@@ -90,6 +90,11 @@ The library provides resource-specific classes to interact with different AWX AP
 endpoints. Below are examples of how to work with job templates and workflow job
 templates.
 
+> [!NOTE]
+> The library uses Pydantic models to ensure that the data conforms to the AWX API's
+> expected structure. This helps in reducing runtime errors by validating the data
+> before sending it to the API.
+
 #### 📜 Job Templates
 
 ```python
@@ -143,30 +148,6 @@ client.workflow_job_template.update("Release Deployment Workflow", updated_workf
 
 # Delete a workflow job template
 client.workflow_job_template.delete("Release Deployment Workflow")
-```
-
-### ✔️ Data Validation with Pydantic Models
-
-The library uses Pydantic models to ensure that the data conforms to the AWX API's
-expected structure. This helps in reducing runtime errors by validating the data
-before sending it to the API.
-
-```python
-from pydantic import ValidationError
-
-from pyawxapi.models import JobTemplateModel
-
-# Create a job template with validation
-try:
-    job_template = JobTemplateModel(
-        name="Valid Job Template",
-        inventory="inventory_1",
-        project="project_1",
-        playbook="deploy.yml",
-    )
-    print("Job template is valid:", job_template)
-except ValidationError as e:
-    print("Validation error:", e)
 ```
 
 ## 🤝 Contributing

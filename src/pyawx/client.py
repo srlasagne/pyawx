@@ -92,3 +92,11 @@ class Client:
             )
 
         return auth
+
+    def is_authenticated(self) -> bool:
+        """Checks if the client is authenticated.
+
+        Returns:
+            `bool`: True if the client is authenticated, False otherwise.
+        """
+        return self._http_client.is_authenticated()

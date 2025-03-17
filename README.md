@@ -171,7 +171,16 @@ except ValidationError as e:
 
 ## 🤝 Contributing
 
-_work in progress_
+We welcome contributions! Please follow these steps:
+
+1. Open an issue to discuss your proposed changes.
+2. Fork the repository.
+3. Clone the fork.
+4. Create a new branch (`git checkout -b feature/my-feat-branch`).
+5. Make your changes.
+6. Commit your changes (`git commit -m "feat: Add mew feature"`).
+7. Push to the branch (`git push origin feature/my-feat-branch`).
+8. Open a pull request.
 
 ## 🧪 Testing
 

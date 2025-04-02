@@ -3,7 +3,7 @@ from pyawx.models.job_template import JobTemplateModel
 from pyawx.resources.adapter import Adapter
 
 
-class JobTemplateResource(Adapter):
+class JobTemplate(Adapter):
     """Represents a resource for interacting with job templates in the API.
 
     Attributes:

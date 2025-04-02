@@ -3,7 +3,7 @@ from pyawx.models.workflow_job_template import WorkflowJobTemplateModel
 from pyawx.resources.adapter import Adapter
 
 
-class WorkflowJobTemplateResource(Adapter):
+class WorkflowJobTemplate(Adapter):
     """Represents a resource for interacting with workflow job templates in the API.
 
     Attributes:

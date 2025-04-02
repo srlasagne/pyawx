@@ -25,7 +25,7 @@ Warnings:
 
 from pyawx.auth import BasicAuth, OAuth2
 from pyawx.http import HTTP
-from pyawx.resources import JobTemplateResource, WorkflowJobTemplateResource
+from pyawx.resources import JobTemplate, WorkflowJobTemplate
 
 
 class Client:
@@ -60,8 +60,8 @@ class Client:
         """
         self._auth: OAuth2 | BasicAuth = self._authenticate(username, password, token)
         self._http_client = HTTP(url, "v2", self._auth, verify_tls)
-        self.job_template = JobTemplateResource(self._http_client)
-        self.workflow_job_template = WorkflowJobTemplateResource(self._http_client)
+        self.job_template = JobTemplate(self._http_client)
+        self.workflow_job_template = WorkflowJobTemplate(self._http_client)
 
     @staticmethod
     def _authenticate(

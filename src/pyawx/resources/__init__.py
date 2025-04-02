@@ -1,9 +1,9 @@
-from pyawx.resources.job_template import JobTemplateResource as JobTemplateResource
+from pyawx.resources.job_template import JobTemplate as JobTemplate
 from pyawx.resources.workflow_job_template import (
-    WorkflowJobTemplateResource as WorkflowJobTemplateResource,
+    WorkflowJobTemplate as WorkflowJobTemplate,
 )
 
 __all__ = [
-    "JobTemplateResource",
-    "WorkflowJobTemplateResource",
+    "JobTemplate",
+    "WorkflowJobTemplate",
 ]

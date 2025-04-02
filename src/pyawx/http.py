@@ -111,7 +111,7 @@ class HTTP:
             `bool`: True if the client is authenticated, False otherwise.
         """
         try:
-            self._request("GET", self.url)
+            self._request("GET", f"{self.url}/api/")
             return True
         except requests.HTTPError:
             return False

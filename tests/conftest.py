@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 from pyawx.auth import Auth, BasicAuth, OAuth2
 from pyawx.http import HTTP
-from pyawx.resources import Resource
+from pyawx.resources.adapter import Adapter
 
 
 @pytest.fixture
@@ -38,5 +38,5 @@ class MockModel(BaseModel):
 
 
 @pytest.fixture
-def resource(http: HTTP) -> Resource:
-    return Resource(http, "resource", MockModel)
+def adapter(http: HTTP) -> Adapter:
+    return Adapter(http, "resource", MockModel)

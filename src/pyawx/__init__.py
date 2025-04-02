@@ -1,3 +1,3 @@
 from pyawx.client import Client as Client
-from pyawx.resources import JobTemplateResource as JobTemplateResource
-from pyawx.resources import WorkflowJobTemplateResource as WorkflowJobTemplateResource
+from pyawx.resources import JobTemplate as JobTemplate
+from pyawx.resources import WorkflowJobTemplate as WorkflowJobTemplate

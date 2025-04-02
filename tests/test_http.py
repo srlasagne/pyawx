@@ -56,7 +56,7 @@ def test_request_no_content(http: HTTP) -> None:
 def test_is_authenticated_success(http: HTTP) -> None:
     responses.add(
         responses.GET,
-        "https://api.example.com",
+        "https://api.example.com/api/",
         status=200,
     )
 
@@ -67,7 +67,7 @@ def test_is_authenticated_success(http: HTTP) -> None:
 def test_is_authenticated_failure(http: HTTP) -> None:
     responses.add(
         responses.GET,
-        "https://api.example.com",
+        "https://api.example.com/api/",
         status=401,
     )
 

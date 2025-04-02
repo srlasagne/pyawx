@@ -1,30 +1,12 @@
-"""Defines classes for managing API resources.
-
-It provides a `Resource` class to encapsulate common functionality and
-specialized resource classes for specific API endpoints.
-
-Features:
-
-- Unified interface for CRUD operations (`fetch`, `create`, `update`, `delete`).
-- Utilizes the `pyawx.HTTP` client for API communication.
-- Leverages Pydantic models for resource validation and serialization.
-
-Warnings:
-
-- The API endpoints must match the `resource` name provided in the AWX API
-  reference.
-"""
-
 from pydantic import BaseModel
 
-from .http import HTTP
-from .models import JobTemplateModel, WorkflowJobTemplateModel
+from pyawx.http import HTTP
 
 
-class Resource:
+class Adapter:
     """Represents a base resource for interacting with the API.
 
-    The `Resource` is used as a base for interacting with API resources,
+    The `Adapter` is used as a base for interacting with API resources,
     providing common methods to fetch, create, update, and delete resources. It
     uses an HTTP client to send requests to the API.
 
@@ -35,6 +17,13 @@ class Resource:
         `model` (`type[BaseModel] | None`): The optional Pydantic model class
             that defines the structure of the resource data.
     """
+
+    resource_map: dict[str, str] = {
+        "inventory": "inventories",
+        "project": "projects",
+        "webhook_credential": "webhook_credentials",
+        "organization": "organizations",
+    }
 
     def __init__(
         self,
@@ -87,16 +76,10 @@ class Resource:
         Returns:
             `dict`: The data dictionary with resource names converted to IDs.
         """
-        resource_map: dict[str, str] = {
-            "inventory": "inventories",
-            "project": "projects",
-            "webhook_credential": "webhook_credentials",
-            "organization": "organizations",
-        }
 
-        for field, resource_name in resource_map.items():
+        for field, resource_name in self.resource_map.items():
             if field in data and isinstance(data[field], str):
-                resource_id: str = Resource(self._http, resource_name)._get_id_by_name(
+                resource_id: str = Adapter(self._http, resource_name)._get_id_by_name(
                     data[field]
                 )
                 data[field] = resource_id
@@ -182,36 +165,23 @@ class Resource:
         resource_id: str = self._get_id_by_name(resource_name)
         self._http.delete(self.resource, resource_id)
 
+    def exists(self, resource_name: str) -> bool:
+        """Checks if a resource by the given name exists.
 
-class JobTemplateResource(Resource):
-    """Represents a resource for interacting with job templates in the API.
+        Args:
+            `resource_name` (`str`): The name of the resource to check.
 
-    Attributes:
-        `_http` (`HTTP`): The HTTP client used to send requests to the API.
-        `resource` (`str`): The resource name.
-        `model` (`type[JobTemplateModel]`): The Pydantic model class for the job
-            template data.
-    """
+        Returns:
+            `bool`: True if the resource exists, False otherwise.
 
-    def __init__(self, http_client: HTTP) -> None:
-        super().__init__(http_client, "job_templates", JobTemplateModel)
-
-    # TODO: Add `launch` method to launch a job template.
-
-
-class WorkflowJobTemplateResource(Resource):
-    """Represents a resource for interacting with workflow job templates in the API.
-
-    Attributes:
-        `_http` (`HTTP`): The HTTP client used to send requests to the API.
-        `resource` (`str`): The resource name.
-        `model` (`type[WorkflowJobTemplateModel]`): The Pydantic model class for
-            the workflow job template data.
-    """
-
-    def __init__(self, http_client: HTTP) -> None:
-        super().__init__(
-            http_client, "workflow_job_templates", WorkflowJobTemplateModel
-        )
-
-    # TODO: Add `launch` method to launch a workflow job template.
+        Examples:
+            >>> resource.exists("My Job Template")
+            True
+            >>> resource.exists("Nonexistent Job Template")
+            False
+        """
+        try:
+            self._get_id_by_name(resource_name)
+            return True
+        except ValueError:
+            return False

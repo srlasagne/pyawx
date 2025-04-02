@@ -18,6 +18,13 @@ class Adapter:
             that defines the structure of the resource data.
     """
 
+    resource_map: dict[str, str] = {
+        "inventory": "inventories",
+        "project": "projects",
+        "webhook_credential": "webhook_credentials",
+        "organization": "organizations",
+    }
+
     def __init__(
         self,
         http: HTTP,
@@ -69,14 +76,8 @@ class Adapter:
         Returns:
             `dict`: The data dictionary with resource names converted to IDs.
         """
-        resource_map: dict[str, str] = {
-            "inventory": "inventories",
-            "project": "projects",
-            "webhook_credential": "webhook_credentials",
-            "organization": "organizations",
-        }
 
-        for field, resource_name in resource_map.items():
+        for field, resource_name in self.resource_map.items():
             if field in data and isinstance(data[field], str):
                 resource_id: str = Adapter(self._http, resource_name)._get_id_by_name(
                     data[field]

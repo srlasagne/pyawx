@@ -165,7 +165,20 @@ class Adapter:
         self._http.delete(self.resource, resource_id)
 
     def exists(self, resource_name: str) -> bool:
-        """Checks if a resource by the given name exists."""
+        """Checks if a resource by the given name exists.
+
+        Args:
+            `resource_name` (`str`): The name of the resource to check.
+
+        Returns:
+            `bool`: True if the resource exists, False otherwise.
+
+        Examples:
+            >>> resource.exists("My Job Template")
+            True
+            >>> resource.exists("Nonexistent Job Template")
+            False
+        """
         try:
             self._get_id_by_name(resource_name)
             return True

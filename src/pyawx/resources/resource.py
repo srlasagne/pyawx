@@ -1,24 +1,6 @@
-"""Defines classes for managing API resources.
-
-It provides a `Resource` class to encapsulate common functionality and
-specialized resource classes for specific API endpoints.
-
-Features:
-
-- Unified interface for CRUD operations (`fetch`, `create`, `update`, `delete`).
-- Utilizes the `pyawx.HTTP` client for API communication.
-- Leverages Pydantic models for resource validation and serialization.
-
-Warnings:
-
-- The API endpoints must match the `resource` name provided in the AWX API
-  reference.
-"""
-
 from pydantic import BaseModel
 
-from .http import HTTP
-from .models import JobTemplateModel, WorkflowJobTemplateModel
+from pyawx.http import HTTP
 
 
 class Resource:
@@ -182,36 +164,10 @@ class Resource:
         resource_id: str = self._get_id_by_name(resource_name)
         self._http.delete(self.resource, resource_id)
 
-
-class JobTemplateResource(Resource):
-    """Represents a resource for interacting with job templates in the API.
-
-    Attributes:
-        `_http` (`HTTP`): The HTTP client used to send requests to the API.
-        `resource` (`str`): The resource name.
-        `model` (`type[JobTemplateModel]`): The Pydantic model class for the job
-            template data.
-    """
-
-    def __init__(self, http_client: HTTP) -> None:
-        super().__init__(http_client, "job_templates", JobTemplateModel)
-
-    # TODO: Add `launch` method to launch a job template.
-
-
-class WorkflowJobTemplateResource(Resource):
-    """Represents a resource for interacting with workflow job templates in the API.
-
-    Attributes:
-        `_http` (`HTTP`): The HTTP client used to send requests to the API.
-        `resource` (`str`): The resource name.
-        `model` (`type[WorkflowJobTemplateModel]`): The Pydantic model class for
-            the workflow job template data.
-    """
-
-    def __init__(self, http_client: HTTP) -> None:
-        super().__init__(
-            http_client, "workflow_job_templates", WorkflowJobTemplateModel
-        )
-
-    # TODO: Add `launch` method to launch a workflow job template.
+    def exists(self, resource_name: str) -> bool:
+        """Checks if a resource by the given name exists."""
+        try:
+            self._get_id_by_name(resource_name)
+            return True
+        except ValueError:
+            return False

@@ -3,10 +3,10 @@ from pydantic import BaseModel
 from pyawx.http import HTTP
 
 
-class Resource:
+class Adapter:
     """Represents a base resource for interacting with the API.
 
-    The `Resource` is used as a base for interacting with API resources,
+    The `Adapter` is used as a base for interacting with API resources,
     providing common methods to fetch, create, update, and delete resources. It
     uses an HTTP client to send requests to the API.
 
@@ -78,7 +78,7 @@ class Resource:
 
         for field, resource_name in resource_map.items():
             if field in data and isinstance(data[field], str):
-                resource_id: str = Resource(self._http, resource_name)._get_id_by_name(
+                resource_id: str = Adapter(self._http, resource_name)._get_id_by_name(
                     data[field]
                 )
                 data[field] = resource_id

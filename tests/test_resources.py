@@ -1,12 +1,12 @@
 import pytest
 import responses
 
-from pyawx.resources.resource import Resource
+from pyawx.resources.adapter import Adapter
 from tests.conftest import MockModel
 
 
 @responses.activate
-def test_fetch_resource(resource: Resource) -> None:
+def test_fetch_resource(adapter: Adapter) -> None:
     responses.add(
         responses.GET,
         "https://api.example.com/api/v1/resource/",
@@ -20,12 +20,12 @@ def test_fetch_resource(resource: Resource) -> None:
         status=200,
     )
 
-    result: dict = resource.fetch("test_resource")
+    result: dict = adapter.fetch("test_resource")
     assert result == {"id": "123", "name": "test_resource"}
 
 
 @responses.activate
-def test_create_resource(resource: Resource) -> None:
+def test_create_resource(adapter: Adapter) -> None:
     responses.add(
         responses.POST,
         "https://api.example.com/api/v1/resource/",
@@ -34,12 +34,12 @@ def test_create_resource(resource: Resource) -> None:
     )
 
     payload = MockModel(name="new_resource")
-    result: dict = resource.create(payload)
+    result: dict = adapter.create(payload)
     assert result == {"id": "123", "name": "new_resource"}
 
 
 @responses.activate
-def test_update_resource(resource: Resource) -> None:
+def test_update_resource(adapter: Adapter) -> None:
     responses.add(
         responses.GET,
         "https://api.example.com/api/v1/resource/",
@@ -54,12 +54,12 @@ def test_update_resource(resource: Resource) -> None:
     )
 
     payload = MockModel(name="updated_resource")
-    result: dict = resource.update("existing_resource", payload)
+    result: dict = adapter.update("existing_resource", payload)
     assert result == {"id": "123", "name": "updated_resource"}
 
 
 @responses.activate
-def test_delete_resource(resource: Resource) -> None:
+def test_delete_resource(adapter: Adapter) -> None:
     responses.add(
         responses.GET,
         "https://api.example.com/api/v1/resource/",
@@ -72,12 +72,12 @@ def test_delete_resource(resource: Resource) -> None:
         status=204,
     )
 
-    result: None = resource.delete("resource_to_delete")
+    result: None = adapter.delete("resource_to_delete")
     assert result is None
 
 
 @responses.activate
-def test_get_id_by_name(resource: Resource) -> None:
+def test_get_id_by_name(adapter: Adapter) -> None:
     responses.add(
         responses.GET,
         "https://api.example.com/api/v1/resource/",
@@ -85,12 +85,12 @@ def test_get_id_by_name(resource: Resource) -> None:
         status=200,
     )
 
-    resource_id: str = resource._get_id_by_name("test_resource")
+    resource_id: str = adapter._get_id_by_name("test_resource")
     assert resource_id == "123"
 
 
 @responses.activate
-def test_get_id_by_name_not_found(resource: Resource) -> None:
+def test_get_id_by_name_not_found(adapter: Adapter) -> None:
     responses.add(
         responses.GET,
         "https://api.example.com/api/v1/resource/",
@@ -101,11 +101,11 @@ def test_get_id_by_name_not_found(resource: Resource) -> None:
     with pytest.raises(
         ValueError, match="Resource with name 'non_existent' not found."
     ):
-        resource._get_id_by_name("non_existent")
+        adapter._get_id_by_name("non_existent")
 
 
 @responses.activate
-def test_names_to_ids(resource: Resource) -> None:
+def test_names_to_ids(adapter: Adapter) -> None:
     responses.add(
         responses.GET,
         "https://api.example.com/api/v1/inventories/",
@@ -124,7 +124,7 @@ def test_names_to_ids(resource: Resource) -> None:
         "project": "project_name",
     }
 
-    result: dict = resource._names_to_ids(data)
+    result: dict = adapter._names_to_ids(data)
     assert result == {
         "inventory": "1",
         "project": "2",

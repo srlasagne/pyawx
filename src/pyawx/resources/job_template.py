@@ -1,9 +1,9 @@
 from pyawx.http import HTTP
 from pyawx.models.job_template import JobTemplateModel
-from pyawx.resources.resource import Resource
+from pyawx.resources.adapter import Adapter
 
 
-class JobTemplateResource(Resource):
+class JobTemplateResource(Adapter):
     """Represents a resource for interacting with job templates in the API.
 
     Attributes:

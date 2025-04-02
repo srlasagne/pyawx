@@ -77,6 +77,28 @@ def test_delete_resource(adapter: Adapter) -> None:
 
 
 @responses.activate
+def test_exists_resource(adapter: Adapter) -> None:
+    responses.add(
+        responses.GET,
+        "https://api.example.com/api/v1/resource/",
+        json={"results": [{"id": "123", "name": "existing_resource"}]},
+        status=200,
+    )
+    assert adapter.exists("existing_resource") is True
+
+
+@responses.activate
+def test_exists_resource_not_found(adapter: Adapter) -> None:
+    responses.add(
+        responses.GET,
+        "https://api.example.com/api/v1/resource/",
+        json={"results": []},
+        status=200,
+    )
+    assert adapter.exists("missing_resource") is False
+
+
+@responses.activate
 def test_get_id_by_name(adapter: Adapter) -> None:
     responses.add(
         responses.GET,

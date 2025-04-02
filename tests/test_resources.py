@@ -1,7 +1,7 @@
 import pytest
 import responses
 
-from pyawx.resources import Resource
+from pyawx.resources.resource import Resource
 from tests.conftest import MockModel
 
 

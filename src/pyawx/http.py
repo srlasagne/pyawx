@@ -33,7 +33,7 @@ Warnings:
 
 import requests
 
-from .auth import Auth
+from pyawx.auth import Auth
 
 
 class HTTP:

@@ -3,7 +3,7 @@ from typing import Any
 
 from pydantic import BaseModel, Field
 
-from .enums import WebhookServiceEnum
+from pyawx.models.enums import WebhookServiceEnum
 
 
 class WorkflowJobTemplateModel(BaseModel):

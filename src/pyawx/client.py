@@ -23,9 +23,9 @@ Warnings:
   MITM attacks. Use this option with caution.
 """
 
-from .auth import BasicAuth, OAuth2
-from .http import HTTP
-from .resources import JobTemplateResource, WorkflowJobTemplateResource
+from pyawx.auth import BasicAuth, OAuth2
+from pyawx.http import HTTP
+from pyawx.resources import JobTemplateResource, WorkflowJobTemplateResource
 
 
 class Client:

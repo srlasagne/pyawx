@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 from pyawx.auth import Auth, BasicAuth, OAuth2
 from pyawx.http import HTTP
-from pyawx.resources import Resource
+from pyawx.resources.resource import Resource
 
 
 @pytest.fixture
